@@ -21,7 +21,7 @@ const CourseSidebar: React.FC<SideBarProps> = ({
       {/* Top Section */}
       <div className="w-full flex items-center justify-between py-3 px-4 bg-[#191919] text-[#dcdcdc] border-b border-gray-700">
         {/* Course Name */}
-        <h2 className="text-lg font-semibold truncate">{course.name}</h2>
+        <h2 className="text-lg font-semibold truncate">{course.title}</h2>
 
         {/* Section Selector */}
         <div className="relative">

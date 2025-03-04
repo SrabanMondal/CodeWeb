@@ -21,11 +21,12 @@ const QuestionEditor: React.FC<QuestionProps> = ({ selectedQuestion, code, setCo
     <div className="flex-1 flex w-full h-full">
       {/* Question Panel */}
       <div className="flex-1 w-1/2 max-h-[80vh] overflow-y-auto bg-black/60 text-white m-3 rounded-xl border-2 border-black shadow-black overflow-hidden shadow-2xl h-full">
-        <h2 className="p-4 text-white bg-[#424242] text-lg font-semibold">Q{selectedQuestion.id}</h2>
-        <h3 className="text-2xl font-semibold p-4 bg-[#333333]">{selectedQuestion.question}</h3>
-        <p className="p-4 bg-[#333333]">Solve on your own</p>
+      <div className=" flex">
+        <h2 className="p-4 text-white text-lg font-semibold">Q{selectedQuestion.id}</h2>
+        <h3 className="text-2xl font-semibold p-4">{selectedQuestion.question}</h3>
       </div>
-
+        <p className="p-4 bg-[#333333]">{selectedQuestion.description}</p>
+      </div>
       {/* Code Editor Panel */}
       <div className="w-1/2 m-3 text-white flex flex-col gap-2">
         {/* Header with Language Selector and Buttons */}

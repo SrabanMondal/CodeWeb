@@ -2,9 +2,11 @@ import axios from "axios";
 import { AxiosResponse } from "axios";
 const api = "http://localhost:3000"
 const api2 = "http://localhost:4500"
+const api3 = "http://localhost:4900"
 export type Question ={
     id: string,
     question: string,
+    description: string
 }
 export type Section ={
     id: string,
@@ -12,11 +14,11 @@ export type Section ={
     questions: Question[]
 }
 export type Course={
-    id: string;
-    name: string;
+    courseid: string;
+    title: string;
     sections : Section[]
 }
-export async function getcourse(id: string): Promise<Course | null> {
+export async function getcourse(id: string): Promise<Course|null> {
     try {
       const response = await fetch(api + `/api/courses/${id}`, {
         cache: "force-cache",
@@ -41,4 +43,14 @@ export async function compilecode(code:string):Promise<string>{ //yahi change ka
         console.log(error)
         return "Compilation failed";
     }
+}
+export async function login(email:string, password:string):Promise<string|null>{
+  try {
+    console.log("Hello Mondal");
+    const response = await axios.post(api3 + `/api/v1/main/login`, { email, password });
+    return response.data.token;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
