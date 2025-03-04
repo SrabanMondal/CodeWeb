@@ -1,6 +1,6 @@
 import ApiResponse from "../Utils/ApiResponse.js";
 import ApiError from "../Utils/ApiError.js";
-import Student from "../Models/main.js";
+import Student from "../Models/Student.js";
 import bcrypt from "bcrypt";
 import GenerateToken from "../Utils/Token.js";
 const Register = async (req, res) => {
