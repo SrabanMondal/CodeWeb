@@ -2,21 +2,21 @@ import mongoose from "mongoose";
 
 const CourseScheme = new mongoose.Schema(
 	{
-		Title: {
+		title: {
 			type: String,
 		},
-		CourseId: {
+		courseid: {
 			type: String,
 		},
-		Sections: [
+		sections: [
 			{
 				id: {
 					type: String,
 				},
-				Name: {
+				name: {
 					type: String,
 				},
-				Questions: [
+				questions: [
 					{
 						id: {
 							type: String,
@@ -24,7 +24,7 @@ const CourseScheme = new mongoose.Schema(
 						question: {
 							type: String,
 						},
-						Description: {
+						description: {
 							type: String,
 						},
 					},

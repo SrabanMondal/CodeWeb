@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 const StudentScheme = new mongoose.Schema(
   {
-    Name: {
+    name: {
       type: String,
     },
-    Email: {
+    email: {
       type: String,
     },
-    Password: {
+    password: {
       type: String,
     },
   },

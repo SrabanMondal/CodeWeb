@@ -12,7 +12,7 @@ const Register = async (req, res) => {
         .json(new ApiResponse(false, "Email and Password is required"));
     }
     const student = await Student.findOne({
-      Email: email,
+      email: email,
     });
     if (student) {
       return res
@@ -21,8 +21,8 @@ const Register = async (req, res) => {
     }
     const hasedpassword = await bcrypt.hash(password, 10);
     const newstudent = await Student.create({
-      Email: email,
-      Password: hasedpassword,
+      email: email,
+      password: hasedpassword,
     });
     res.status(201).json(new ApiResponse(true, "Student created successfully"));
   } catch (error) {
@@ -38,11 +38,11 @@ const Login = async (req, res) => {
         .status(400)
         .json(new ApiResponse(false, "Email and Password is Required"));
     }
-    const student = await Student.findOne({ Email: email });
+    const student = await Student.findOne({ email: email });
     if (!student) {
       return res.status(404).json(new ApiResponse(false, "Student not Found"));
     }
-    const ismatched = bcrypt.compare(password, student.Password);
+    const ismatched = bcrypt.compare(password, student.password);
     if (!ismatched) {
       return res
         .status(400)
