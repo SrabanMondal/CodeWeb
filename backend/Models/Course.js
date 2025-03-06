@@ -8,25 +8,47 @@ const CourseScheme = new mongoose.Schema(
 		courseid: {
 			type: String,
 		},
-		sections: [
+		mcqsection: [
 			{
-				id: {
+				title: {
 					type: String,
 				},
-				name: {
+				description: {
 					type: String,
 				},
-				questions: [
+				options: [
 					{
-						id: {
-							type: String,
-						},
-						question: {
-							type: String,
-						},
-						description: {
-							type: String,
-						},
+						type: String,
+					},
+				],
+			},
+		],
+		easycodesection: [
+			{
+				title: {
+					type: String,
+				},
+				description: {
+					type: String,
+				},
+				testcases: [
+					{
+						type: String,
+					},
+				],
+			},
+		],
+		hardcodesection: [
+			{
+				title: {
+					type: String,
+				},
+				description: {
+					type: String,
+				},
+				testcases: [
+					{
+						type: String,
 					},
 				],
 			},
