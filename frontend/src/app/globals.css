@@ -22,4 +22,23 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+pre::-webkit-scrollbar {
+  width: 8px;
+  height: 8px; /* For horizontal scrollbar */
+}
+
+pre::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Dark track */
+  border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background: #444; /* Dark gray scrollbar */
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+  background: #666; /* Slightly lighter on hover */
+}
 

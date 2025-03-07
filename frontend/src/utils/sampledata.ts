@@ -31,7 +31,44 @@ export const coursesdata: Course[] = [
                 name: "Basics",
                 questions: [
                     { id: "1", question: "What is the difference between `let`, `var`, and `const`?" ,description:''},
-                    { id: "2", question: "What are JavaScript data types?",description:'' }
+                    { id: "2", question: "What are JavaScript data types?",description:`
+  Problem Statement:
+  Write a function that takes a list of numbers and returns a new list containing only the even numbers.
+
+  Example Input:
+  {
+    "numbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  }
+
+  Example Output:
+  {
+    "evenNumbers": [2, 4, 6, 8, 10]
+  }
+  Problem Statement:
+  Write a function that takes a list of numbers and returns a new list containing only the even numbers.
+
+  Example Input:
+  {
+    "numbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  }
+
+  Example Output:
+  {
+    "evenNumbers": [2, 4, 6, 8, 10]
+  }
+  Problem Statement:
+  Write a function that takes a list of numbers and returns a new list containing only the even numbers.
+
+  Example Input:
+  {
+    "numbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  }
+
+  Example Output:
+  {
+    "evenNumbers": [2, 4, 6, 8, 10]
+  }
+` }
                 ],
             },
             {

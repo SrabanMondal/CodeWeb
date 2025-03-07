@@ -17,11 +17,11 @@ const CourseSidebar: React.FC<SideBarProps> = ({
   setSelectedQuestion,
 }) => {
   return (
-    <div className="w-full flex flex-col bg-white shadow-lg overflow-hidden">
+    <div className="w-full flex flex-col bg-black shadow-lg overflow-hidden">
       {/* Top Section */}
-      <div className="w-full flex items-center justify-between py-3 px-4 bg-[#191919] text-[#dcdcdc] border-b border-gray-700">
+      <div className="w-full flex items-center justify-between py-3 px-4 bg-[#000] text-[#dcdcdc] border-b border-gray-700">
         {/* Course Name */}
-        <h2 className="text-lg font-semibold truncate">{course.title}</h2>
+        <h2 className="text-lg font-semibold">{course.title}</h2>
 
         {/* Section Selector */}
         <div className="relative">
@@ -54,7 +54,7 @@ const CourseSidebar: React.FC<SideBarProps> = ({
       </div>
 
       {/* Horizontal Question List */}
-      <div className="overflow-x-auto whitespace-nowrap py-3 px-2 bg-[#424242] flex items-center">
+      <div className="overflow-x-auto whitespace-nowrap py-3 px-2 bg-[#191919] flex items-center">
         {selectedSection.questions.map((question) => (
           <button
             key={question.id}

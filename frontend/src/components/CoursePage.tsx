@@ -16,7 +16,7 @@ const CoursePage:React.FC<Courseprops> = ({ course }) => {
   const [selectedQuestion, setSelectedQuestion] = useState(selectedSection.questions[0]);
   const [code, setCode] = useState("// Write your code here...");
   return (
-    <div className="h-screen w-full bg-[#191919] text-black">
+    <div className="h-screen w-full bg-[#191919] text-white">
       <CourseSidebar
         course={course}
         selectedSection={selectedSection}

@@ -20,13 +20,8 @@ export type Course={
 }
 export async function getcourse(id: string): Promise<Course|null> {
     try {
-      const response = await fetch(api + `/api/courses/${id}`, {
-        cache: "force-cache",
-      });
-  
-      if (!response.ok) return null;
-    
-      return response.json();
+      const response = await axios.get(api + `/api/courses/${id}`);
+      return response.data;
     } catch (error) {
         console.log(error)
       return null;
