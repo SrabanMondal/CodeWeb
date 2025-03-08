@@ -23,6 +23,9 @@ const Register = async (req, res) => {
     const newstudent = await Student.create({
       email: email,
       password: hasedpassword,
+      courses_completed: 0,
+      average_grade: 0,
+      correct_percentage: 0,
     });
     res.status(201).json(new ApiResponse(true, "Student created successfully"));
   } catch (error) {
@@ -55,4 +58,25 @@ const Login = async (req, res) => {
   }
 };
 
-export { Register, Login };
+const GetStudentData = async (req, res) => {
+  try {
+    const id = req.student._id.toString();
+    if (!id) {
+      return res.status(404).json(new ApiResponse(false, "Student not Found"));
+    }
+    const student = await Student.findById(id);
+    if (!student) {
+      return res.status(404).json(new ApiResponse(false, "Student Not Found"));
+    }
+    const data = {
+      courses_completed: student.courses_completed,
+      correct_percentage: student.correct_percentage,
+      average_grade: student.average_grade,
+    };
+    res.status(200).json(new ApiResponse(true, data));
+  } catch (error) {
+    res.status(500).json(new ApiError(false, error.message));
+  }
+};
+
+export { Register, Login, GetStudentData };

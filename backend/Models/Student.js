@@ -14,26 +14,35 @@ const StudentScheme = new mongoose.Schema(
 		courses_enrolled: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
-				ref : "Course",
+				ref: "Course",
 			},
 		],
 		courses_attempted: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
-				ref : "Course",
+				ref: "Course",
 			},
 		],
 		courses_marks: [
 			{
 				course: {
 					type: mongoose.Schema.Types.ObjectId,
-					ref : "Course",
+					ref: "Course",
 				},
 				marks: {
 					type: String,
 				},
 			},
 		],
+		courses_completed: {
+			type: Number,
+		},
+		correct_percentage: {
+			type: Number,
+		},
+		average_grade: {
+			type: Number,
+		}
 	},
 	{ version_key: false },
 );
