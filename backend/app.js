@@ -6,6 +6,7 @@ import ConnectDb from "./Config/ConnectDb.js";
 dotenv.config();
 const app = express();
 ConnectDb();
+app.use(express.json());
 app.get("/", (_, res) => {
 	res.send("<h1> Backend Server is Working</h1>");
 });

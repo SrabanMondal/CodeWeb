@@ -14,17 +14,20 @@ const StudentScheme = new mongoose.Schema(
 		courses_enrolled: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
+				ref : "Course",
 			},
 		],
 		courses_attempted: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
+				ref : "Course",
 			},
 		],
 		courses_marks: [
 			{
 				course: {
 					type: mongoose.Schema.Types.ObjectId,
+					ref : "Course",
 				},
 				marks: {
 					type: String,
