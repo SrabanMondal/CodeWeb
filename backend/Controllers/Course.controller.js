@@ -25,17 +25,11 @@ const CreateCourse = async (req, res) => {
 };
 const GetAllCourses = async (req, res) => {
   try {
-    const id = req.student._id.toString();
-    if (!id) {
-      return res.status(400).json(new ApiResponse(false, "Token is Required"));
-    }
-    const student = await Student.findById(id);
-    if (!student) {
-      return res.status(400).json(new ApiResponse(false, "Student Not Found"));
-    }
+    const courses = await Course.find({});
     const data = [];
-    for (let i = 0; i < student.courses_enrolled.length; i++) {
-      const course = student.courses_enrolled[i];
+    console.log(courses);
+    for (let i = 0; i < courses.length; i++) {
+      const course = courses[i];
       data.push(course);
     }
     res.status(200).json(new ApiResponse(true, data));
@@ -43,4 +37,29 @@ const GetAllCourses = async (req, res) => {
     res.status(500).json(new ApiError(false, error.message));
   }
 };
-export { CreateCourse, GetAllCourses };
+const AddCourseStudent = async(req,res) => {
+try {
+    const {studentemail,coursetitle} = req.body;
+    if(!studentemail || !coursetitle){
+	return res.status(400).json(new ApiResponse(false, "Student Email and Course Title is required"));
+	}
+   const student = await Student.findOne({email:studentemail});
+   if(!student){
+	return res.status(404).json(new ApiResponse(false,"Student Not Found"));
+	}
+   const course = await Course.findOne({courseid:coursetitle});
+   if(!course){
+	return res.status(404).json(new ApiResponse(false,"Course Not Found"));
+	}
+   const id = course._id.toString();
+   if(student.courses_enrolled.includes(id)){
+	return res.status(400).json(new ApiResponse(false,"Course Already Enrolled"));
+	}
+   student.courses_enrolled.push(id);
+   await student.save();
+   res.status(200).json(new ApiResponse(true,"Course Added Successfully"));
+} catch (error) {
+   res.status(500).json(new ApiError(false, error.message));	
+}
+}
+export { CreateCourse, GetAllCourses, AddCourseStudent};

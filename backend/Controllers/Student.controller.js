@@ -66,13 +66,18 @@ const GetStudentData = async (req, res) => {
     if (!id) {
       return res.status(404).json(new ApiResponse(false, "Student not Found"));
     }
-    const student = await Student.findById(id);
+    const student = await Student.findById(id).populate("courses_enrolled");
     if (!student) {
       return res.status(404).json(new ApiResponse(false, "Student Not Found"));
     }
+    const coursedata = [];
+    for(let i = 0 ; i<student.courses_enrolled.length;i++){
+	    const course = student.courses_enrolled[i];
+	    coursedata.push({title: course.title,courseid:course.courseid});
+	    }
     const data = {
       name : student.name,
-      courses_enrolled : student.courses_enrolled,
+      courses_enrolled : coursedata,
       courses_completed: student.courses_completed,
       correct_percentage: student.correct_percentage,
       average_grade: student.average_grade,
