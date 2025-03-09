@@ -3,13 +3,14 @@ import ApiError from "../Utils/ApiError.js";
 import Student from "../Models/Student.js";
 import bcrypt from "bcrypt";
 import GenerateToken from "../Utils/Token.js";
+
 const Register = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
+    const { email, password , name } = req.body;
+    if (!email || !password || !name) {
       return res
         .status(400)
-        .json(new ApiResponse(false, "Email and Password is required"));
+        .json(new ApiResponse(false, "Email,Password and Name is required"));
     }
     const student = await Student.findOne({
       email: email,
@@ -21,6 +22,7 @@ const Register = async (req, res) => {
     }
     const hasedpassword = await bcrypt.hash(password, 10);
     const newstudent = await Student.create({
+      name : name,
       email: email,
       password: hasedpassword,
       courses_completed: 0,
@@ -69,6 +71,8 @@ const GetStudentData = async (req, res) => {
       return res.status(404).json(new ApiResponse(false, "Student Not Found"));
     }
     const data = {
+      name : student.name,
+      courses_enrolled : student.courses_enrolled,
       courses_completed: student.courses_completed,
       correct_percentage: student.correct_percentage,
       average_grade: student.average_grade,
