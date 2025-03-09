@@ -13,10 +13,18 @@ export type Section ={
     name: string,
     questions: Question[]
 }
-export type Course={
-    courseid: string;
-    title: string;
+export type course ={
+    courseid: string,
+    title: string,
+}
+export type Course = course &{
     sections : Section[]
+}
+export type Student ={
+  name?: string,
+  ourses_completed: number,
+  correct_percentage: number,
+  average_grade: number,
 }
 export async function getcourse(id: string): Promise<Course|null> {
     try {
@@ -27,8 +35,31 @@ export async function getcourse(id: string): Promise<Course|null> {
       return null;
     }
   }
-  
-export async function compilecode(code:string):Promise<string>{ //yahi change kariyo, upar wala course api mat change karna
+export async function getstudent(token: string): Promise<Student|null> {
+  try {
+      const response = await axios.get(api + `/api/students/`,{
+        headers: {
+          Authorization: `${token}`, 
+        },});
+      return response.data;
+    } catch (error) {
+        console.log(error)
+      return null;
+    }
+}
+export async function getcourses(token:string):Promise<course[]|null>{
+  try {
+      const response = await axios.get(api + `/api/courses`,{
+        headers: {
+          Authorization: `${token}`, 
+        },});
+      return response.data;
+    } catch (error) {
+      console.log(error)
+      return null;
+    }
+}
+export async function compilecode(code:string):Promise<string>{ 
     try {
 	console.log("Hello Mondal");
         const response = await axios.post(api2+`/run`, {"language":"python","code":code});

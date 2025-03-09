@@ -20,8 +20,8 @@ export default function LoginPage() {
   return (
     <div className="flex h-screen w-full overflow-hidden">
       {/* Left side - Green section */}
-      <div className="relative w-1/2 h-full bg-white">
-      <div style={{borderBottomLeftRadius:'0px',borderTopRightRadius:'250px 450px'}} className="w-full relative overflow-hidden h-full bg-emerald-700 text-white">
+      <div className="relative w-[60vw] h-full bg-white">
+      <div style={{borderBottomRightRadius:'350px 450px',borderTopRightRadius:'350px 450px'}} className="w-full relative overflow-hidden h-full bg-emerald-700 text-white">
         <Image src={'/bg.webp'} alt="img" layout="fill"/>
        {/* 
        <div className="flex flex-col items-center justify-center px-12 text-center h-full">
@@ -49,8 +49,8 @@ export default function LoginPage() {
       </div>
       </div>
       {/* Right side - White section */}
-      <div className="relative bg-[#0a0f1a] w-1/2 h-full">
-      <div style={{borderTopRightRadius:'250px 450px'}} className="w-full h-full bg-white flex justify-center items-center">
+      <div className="relative bg-[#0a0f1a] w-[40vw] h-full">
+      <div   className="w-full h-full bg-white flex justify-center items-center">
         <div className="inset-0 flex flex-col items-center justify-center px-8 sm:px-12">
           <h1 className="mb-2 text-4xl font-bold text-[#121826]">Code Quiz</h1>
           <p className="mb-10 text-2xl text-[#121826]">Login in to your account to continue</p>
@@ -60,7 +60,7 @@ export default function LoginPage() {
               <input type="email" value={email} onChange={(e)=>setemail(e.target.value)} placeholder="Email" className="w-full text-white  bg-[#121826] outline-none" />
             </div>
 
-            <div className="rounded-full bg-[#121826] px-6 py-3 border-[#00ccff]  border-2 border-[#00ccff] border-2">
+            <div className="rounded-full bg-[#121826] px-6 py-3 border-[#00ccff]  border-2">
               <input
                 type="password"
                 value={password}

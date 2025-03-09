@@ -41,4 +41,6 @@ pre::-webkit-scrollbar-thumb {
 pre::-webkit-scrollbar-thumb:hover {
   background: #666; /* Slightly lighter on hover */
 }
-
+input{
+  background-color: transparent !important;;
+}

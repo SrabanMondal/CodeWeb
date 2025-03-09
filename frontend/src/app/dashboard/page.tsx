@@ -1,61 +1,116 @@
-// components/DashboardPage.tsx
-import React from "react";
-import Link from "next/link";
-import { FaUserCircle } from "react-icons/fa";
-import { courses } from "@/utils/sampledata";
-export type Course = {
-  id: string;
-  name: string;
-  description?: string;
-};
+// pages/dashboard.js
+"use client"
+import React, { useEffect, useState } from 'react';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { Poppins, Roboto } from 'next/font/google';
+import { course, getcourses, getstudent, Student } from '@/libs/apis/client';
 
-type DashboardPageProps = {
-  courses: Course[];
-};
+const poppins = Poppins({ weight: '600', subsets: ['latin'] });
+const roboto = Roboto({ weight: '400', subsets: ['latin'] });
 
-const accentColors = [
-  "#ff4d4d", // warm red
-  "#ffa64d", // soft orange
-  "#80ff80", // mint green
-  "#80d4ff", // cool blue
-  "#ff80bf", // gentle pink
-  "#c280ff", // muted purple
-  "#80ffea", // light cyan
-];
+const Dashboard = () => {
+  // Sample data
+  const username = 'John Doe';
+  const cours = [
+    { id: 'CS-101', name: 'Computer Science 101' },
+    { id: 'MATH-201', name: 'Mathematics 201' },
+    { id: 'ENG-301', name: 'English 301' },
+  ];
 
-const DashboardPage: React.FC<DashboardPageProps> = () => {
+  // Metrics values
+  const coursesAttempted = cours.length;
+  const accuracy = '85%';
+  const overallGrade = 'B+';
+
+  const [student, setstudent] = useState<Student|null>(null)
+  const [courses, setcourses] = useState<course[]|null>(null)
+  useEffect(() => {
+   const fetchdata = async ()=>{
+     const token = localStorage.getItem('token');
+     if(token){
+      const course = await getcourses(token)
+      const studentdata = await getstudent(token)
+      if(courses && studentdata){
+        setstudent(studentdata)
+        setcourses(course)
+      }
+     }
+   }
+   fetchdata()
+  }, [courses])
+  
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    alert('logged out');
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-900 to-gray-800 text-gray-200">
+    <div className={`${roboto.className} min-h-screen bg-[#0F0F0F] text-[#F0F0F0]`}>
       {/* Header */}
-      <header className="flex items-center justify-between p-6 bg-gray-800 shadow-md">
-        <h1 className="text-3xl font-bold">Hi, User</h1>
-        <FaUserCircle size={48} className="text-gray-200" />
+      <header
+        className="py-5 px-6 flex justify-between items-center border-b"
+        style={{ backgroundColor: "#1A1A1A", borderColor: "#333333" }}
+      >
+        <h1 style={{fontSize:'28px'}} className={`${poppins.className} text-2xl`}>Hi, {username}</h1>
+        <button
+          onClick={handleLogout}
+          style={{fontSize:'28px'}}
+          className="text-2xl hover:text-[#CCCCCC]"
+          aria-label="Logout"
+        >
+          <FaSignOutAlt />
+        </button>
       </header>
 
       {/* Main Content */}
-      <main className="p-8">
-        <h2 className="text-2xl font-semibold mb-8">Your Courses</h2>
-        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-          {courses.map((course, index) => (
-            <Link href={`/courses/${course.id}`} key={course.id}>
-              <div
-                className="p-6 bg-gray-700 rounded-lg shadow-md transition-transform transform hover:scale-105 cursor-pointer"
-                style={{
-                  border: "4px solid",
-                  borderColor: accentColors[index % accentColors.length],
-                }}
-              >
-                <h3 className="text-xl font-bold text-gray-100">{course.name}</h3>
-                <p className="mt-2 text-gray-300">
-                  {course.description || "No description available"}
-                </p>
+      <main className="p-6">
+        {/* Metrics Section */}
+        <section
+          className="py-8 border-b flex justify-center"
+          style={{ borderColor: "#333333" }}
+        >
+          <div className="flex flex-row items-center w-full justify-around space-x-12">
+            <div className="text-center">
+              <div className="text-5xl font-bold" style={{ color: "#4FA1F9" }}>
+                {coursesAttempted}
               </div>
-            </Link>
-          ))}
-        </div>
+              <div className="mt-2 text-lg">Courses Attempted</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl font-bold" style={{ color: "#4FA1F9" }}>
+                {accuracy}
+              </div>
+              <div className="mt-2 text-lg">Accuracy</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl font-bold" style={{ color: "#4FA1F9" }}>
+                {overallGrade}
+              </div>
+              <div className="mt-2 text-lg">Overall Grade</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Courses Section */}
+        <section className="mt-8">
+          <h2 className={`${poppins.className} text-2xl mb-4`}>Courses</h2>
+          <div className="flex flex-wrap gap-4">
+            {cours.map((course) => (
+              <div
+                key={course.id}
+                className="bg-[#1E1E1E] rounded p-8 shadow hover:shadow-lg transition duration-200 flex flex-col gap-6"
+              >
+                <strong className="block text-2xl" style={{ color: "#4FA1F9" }}>
+                  {course.id}
+                </strong>
+                <p className="mt-1 text-md">{course.name}</p>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
     </div>
   );
 };
 
-export default DashboardPage;
+export default Dashboard;

@@ -23,8 +23,8 @@ const QuestionEditor: React.FC<QuestionProps> = ({ selectedQuestion, code, setCo
       {/* Question Panel */}
       <div className="flex-1 w-1/2   bg-black/60 text-white m-3 rounded-xl border-[1px] border-white/50 shadow-black overflow-hidden shadow-2xl h-full">
       <div className=" flex bg-[#434343]">
-        <h2 className="p-4 text-white text-lg font-semibold">Q{selectedQuestion.id}</h2>
-        <h3 className="text-2xl font-semibold p-4 text-[#dcdcdc] ">{selectedQuestion.question}</h3>
+        <h2 className="px-4 py-3 text-white text-lg font-semibold">Q{selectedQuestion.id}</h2>
+        <h3 className="text-lg py-3 font-semibold px-4 text-[#dcdcdc] ">{selectedQuestion.question}</h3>
       </div>
         <pre className="overflow-y-auto max-h-[90vh] px-4 pb-4 bg-[#191919] text-white whitespace-pre-line font-mono">{selectedQuestion.description}</pre>
       </div>

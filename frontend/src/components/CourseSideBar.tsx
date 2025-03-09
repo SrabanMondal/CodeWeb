@@ -1,6 +1,6 @@
 import { Course, Question, Section } from "@/libs/apis/client";
 import { Dispatch, SetStateAction } from "react";
-
+import { FaUserCircle } from "react-icons/fa";
 type SideBarProps = {
   course: Course;
   selectedSection: Section;
@@ -50,7 +50,7 @@ const CourseSidebar: React.FC<SideBarProps> = ({
         </div>
 
         {/* Student Name */}
-        <p className="text-sm font-medium">👤 John Doe</p>
+        <p className="text-md font-medium items-center flex gap-3"><FaUserCircle size={16}/> John Doe</p>
       </div>
 
       {/* Horizontal Question List */}
