@@ -20,7 +20,7 @@ export default function LoginPage() {
   return (
     <div className="flex h-screen w-full overflow-hidden">
       {/* Left side - Green section */}
-      <div className="relative w-[60vw] h-full bg-white">
+      <div className="relative w-[60vw] h-full bg-[#1A2A44]">
       <div style={{borderBottomRightRadius:'350px 450px',borderTopRightRadius:'350px 450px'}} className="w-full relative overflow-hidden h-full bg-emerald-700 text-white">
         <Image src={'/bg.webp'} alt="img" layout="fill"/>
        {/* 
@@ -49,11 +49,11 @@ export default function LoginPage() {
       </div>
       </div>
       {/* Right side - White section */}
-      <div className="relative bg-[#0a0f1a] w-[40vw] h-full">
-      <div   className="w-full h-full bg-white flex justify-center items-center">
+      <div className="relative bg-[#1c2526] w-[40vw] h-full">
+      <div style={{background:'linear-gradient(to right, #1A2A44 0%,rgb(21, 33, 59) 30%,rgb(4, 9, 35) 100%)'}}  className="w-full h-full flex justify-center items-center text-[#D3D8DC]">
         <div className="inset-0 flex flex-col items-center justify-center px-8 sm:px-12">
-          <h1 className="mb-2 text-4xl font-bold text-[#121826]">Code Quiz</h1>
-          <p className="mb-10 text-2xl text-[#121826]">Login in to your account to continue</p>
+          <h1 className="mb-2 text-4xl font-bold ">Code Quiz</h1>
+          <p className="mb-10 text-2xl ">Login in to your account to continue</p>
 
           <div className="w-full max-w-lg space-y-4">
             <div className="rounded-full bg-[#121826] px-6 py-3 border-[#00ccff]  border-2">
@@ -78,7 +78,7 @@ export default function LoginPage() {
             </div>
                 */} 
 
-            <button onClick={handleLogin} className="w-full rounded-full bg-[#1e2944] border-[#00ccff] border-2 text-[#fff] py-3 font-medium transition hover:bg-[#121826] cursor-pointer">
+            <button onClick={handleLogin} className="w-full rounded-full bg-[#2E8B57] border-[#00ccff] border-2 text-[#fff] py-3 font-medium transition hover:bg-[#121826] cursor-pointer">
               LOG IN
             </button>
             {/*
