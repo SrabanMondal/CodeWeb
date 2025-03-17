@@ -1,24 +1,34 @@
 import axios from "axios";
-import { AxiosResponse } from "axios";
+//import { AxiosResponse } from "axios";
 const api = "http://localhost:3000"
 const api2 = "http://localhost:4500"
 const api3 = "http://localhost:4900"
-export type Question ={
-    id: string,
-    question: string,
-    description: string
+export type McqQuestion ={
+    title: string,
+    description: string,
+    options:Array<string>,
 }
-export type Section ={
-    id: string,
-    name: string,
-    questions: Question[]
+export type SectionQuestion ={
+    title: string,
+    description: string,
+    testcase: string
+}
+export type Mcqs ={
+    title: string,
+    questions: McqQuestion[]
 }
 export type course ={
     courseid: string,
     title: string,
 }
+export type Section = {
+    title: string,
+    questions: SectionQuestion[]
+    
+}
 export type Course = course &{
-    sections : Section[]
+    sections : Section[],
+    mcqs : Mcqs[]
 }
 export type Student ={
   name?: string,

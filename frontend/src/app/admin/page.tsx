@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-import CourseComponent from "@/components/CourseComponent";// Adjust the import path as needed
-
+import CourseComponent from "@/components/CourseComponent";
+import SectionComponent from "@/components/SectionComponent";
+import MCQComponent from "@/components/MCQSection";
 export default function AdminPage() {
   const [activeNav, setActiveNav] = useState("Course");
 
@@ -40,14 +41,8 @@ export default function AdminPage() {
           Admin Dashboard - {activeNav}
         </header>
         {activeNav === "Course" && <CourseComponent />}
-        {activeNav !== "Course" && (
-          <div className="bg-gray-900/90 p-6 rounded-xl shadow-md border border-gray-800/60">
-            <div className="flex flex-col items-center justify-center h-64 text-gray-400">
-              <p className="text-lg">Main content for {activeNav} is coming soon...</p>
-              <p className="text-sm mt-2 text-gray-500">Stay tuned for updates!</p>
-            </div>
-          </div>
-        )}
+        {activeNav === "Section" && <SectionComponent />}
+        {activeNav === "MCQs" && <MCQComponent />}
       </div>
     </div>
   );
