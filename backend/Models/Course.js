@@ -13,12 +13,19 @@ const CourseScheme = new mongoose.Schema(
         title: {
           type: String,
         },
-        description: {
-          type: String,
-        },
-        options: [
+        questions: [
           {
-            type: String,
+            title: {
+              type: String,
+            },
+	    description: {
+              type: String,
+            },
+            options: [
+              {
+                type: String,
+              },
+            ],
           },
         ],
       },
@@ -36,11 +43,11 @@ const CourseScheme = new mongoose.Schema(
             description: {
               type: String,
             },
-          },
-        ],
-        testcases: [
-          {
-            type: String,
+            testcases: [
+              {
+                type: String,
+              },
+            ],
           },
         ],
       },
