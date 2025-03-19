@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { Mcqs, Section } from "./client";
 //const api = "http://localhost:3000"
 //const api2 = "http://localhost:4500"
 const api3 = "http://localhost:4900"
@@ -31,7 +32,7 @@ export async function addcourseStudent(studentemail:string, coursetitle:string):
         return false;
     }
 }
-export async function addMcq(title:string, questions: string[] ,description:string[] ,options:string[][]){
+export async function addMcq(courseid:string,title:string, questions: string[] ,description:string[] ,options:string[][]){
     try {
         const response:AxiosResponse<ApiRes> = await axios.post(api3+'/api/v1/course/addmcq',{
             title,
@@ -45,9 +46,10 @@ export async function addMcq(title:string, questions: string[] ,description:stri
         return false;
     }
 }
-export async function addSection(title:string, questions:Array<string>,  description:string[], testcase:string[]){
+export async function addSection(courseid:string,title:string, questions:Array<string>,  description:string[], testcase:string[]){
     try {
         const response:AxiosResponse<ApiRes> = await axios.post(api3+'/api/v1/course/addsection',{
+            courseid,
             title,
             description,
             testcase
@@ -59,3 +61,21 @@ export async function addSection(title:string, questions:Array<string>,  descrip
         return false;
     }
 }
+export async function getmcqs(): Promise<Mcqs[]|null> {
+    try {
+      const response = await axios.get(api3 + `/api/courses/getmcq`);
+      return response.data;
+    } catch (error) {
+        console.log(error)
+      return null;
+    }
+  }
+export async function getsection(): Promise<Section[]|null> {
+    try {
+      const response = await axios.get(api3 + `/api/courses/getsection`);
+      return response.data;
+    } catch (error) {
+        console.log(error)
+      return null;
+    }
+  }

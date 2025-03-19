@@ -1,38 +1,17 @@
 "use client";
-import { addSection } from "@/libs/apis/admin";
+import { addSection, getsection } from "@/libs/apis/admin";
 import { Section, SectionQuestion } from "@/libs/apis/client";
 import { title } from "process";
 import { useState, useEffect, FormEvent } from "react";
 
 // Placeholder API functions (replace with your actual implementations)
 
-const getSections = async ():Promise<Section[]> => {
-  return new Promise((resolve) =>
-    setTimeout(
-      () =>
-        resolve([
-          {
-            title: "Section 1",
-            questions: [
-              { title: "Question 1", description: "Description 1", testcase: "Testcase 1" },
-              { title: "Question 2", description: "Description 2", testcase: "Testcase 2" },
-            ],
-          },
-          {
-            title: "Section 2",
-            questions: [
-              { title: "Question 3", description: "Description 3", testcase: "Testcase 3" },
-            ],
-          },
-        ]),
-      1000
-    )
-  );
-};
+
 
 export default function SectionComponent() {
   const [activeTab, setActiveTab] = useState("addSection");
   const [sectionTitle, setSectionTitle] = useState("");
+  const [courseid, setcourseid] = useState("");
   const [questions, setQuestions] = useState<SectionQuestion[]>([{ title: "", description: "", testcase: "" }]);
   const [sections, setSections] = useState<Section[]|null>(null);
   const [expandedSection, setExpandedSection] = useState<number|null>(null);
@@ -41,7 +20,7 @@ export default function SectionComponent() {
 
   // Fetch sections on component mount and after adding a section
   const fetchSections = async () => {
-      const fetchedSections = await getSections();
+      const fetchedSections = await getsection();
       setSections(fetchedSections);
       if(!fetchedSections){
       setMessage("Failed to fetch sections. Please try again.");
@@ -80,7 +59,7 @@ export default function SectionComponent() {
     }
     setIsLoading(true);
     setMessage("");
-      const result = await addSection(title,questions.map((q) => q.title),questions.map((q) => q.description),questions.map((q) => q.testcase));
+      const result = await addSection(courseid,title,questions.map((q) => q.title),questions.map((q) => q.description),questions.map((q) => q.testcase));
       if (result) {
         setMessage("Section added successfully");
         setSectionTitle("");
@@ -127,6 +106,19 @@ export default function SectionComponent() {
       {/* Add Section Form */}
       {activeTab === "addSection" && (
         <form onSubmit={handleAddSection} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Course Id
+            </label>
+            <input
+              type="text"
+              value={sectionTitle}
+              onChange={(e) => setcourseid(e.target.value)}
+              className="w-full p-2 bg-gray-800/50 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+              placeholder="Enter section title"
+              required
+            />
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
               Section Title

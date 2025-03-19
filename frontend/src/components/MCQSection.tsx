@@ -1,52 +1,19 @@
 "use client";
-import { addMcq } from "@/libs/apis/admin";
+import { addMcq, getmcqs } from "@/libs/apis/admin";
 import { McqQuestion, Mcqs } from "@/libs/apis/client";
 import { title } from "process";
 import { useState, useEffect, FormEvent } from "react";
 
 
-const getMCQs = async ():Promise<Mcqs[]> => {
-  return new Promise((resolve) =>
-    setTimeout(
-      () =>
-        resolve([
-          {
-            title: "MCQ Section 1",
-            questions: [
-              {
-                title: "Question 1",
-                description: "Description 1",
-                options: ["Option A", "Option B", "Option C"],
-              },
-              {
-                title: "Question 2",
-                description: "Description 2",
-                options: ["Option X", "Option Y"],
-              },
-            ],
-          },
-          {
-            title: "MCQ Section 2",
-            questions: [
-              {
-                title: "Question 3",
-                description: "Description 3",
-                options: ["Option 1", "Option 2", "Option 3", "Option 4"],
-              },
-            ],
-          },
-        ]),
-      1000
-    )
-  );
-};
+
 
 export default function MCQComponent() {
   const [activeTab, setActiveTab] = useState("addMCQ");
   const [sectionTitle, setSectionTitle] = useState("");
+  const [courseid, setcourseid] = useState("")
   const [questions, setQuestions] = useState<McqQuestion[]>([{ title: "", description: "", options: [""] }]);
   const [mcqs, setMCQs] = useState<Mcqs[]|null>(null);
-  const [expandedSection, setExpandedSection] = useState<number>(null);
+  const [expandedSection, setExpandedSection] = useState<number|null>(null);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -54,7 +21,7 @@ export default function MCQComponent() {
   
   useEffect(() => {
       const fetchMCQs = async () => {
-          const fetchedMCQs = await getMCQs();
+          const fetchedMCQs = await getmcqs();
           setMCQs(fetchedMCQs);
         if(!fetchMCQs){
           setMessage("Failed to fetch MCQs. Please try again.");
@@ -114,7 +81,7 @@ export default function MCQComponent() {
     }
     setIsLoading(true);
     setMessage("");
-      const result = await addMcq(title, questions.map(q => q.title),questions.map(q => q.description), questions.map(q => q.options));
+      const result = await addMcq(courseid,title, questions.map(q => q.title),questions.map(q => q.description), questions.map(q => q.options));
       if (result) {
         setMessage("MCQ section added successfully");
         setSectionTitle("");
@@ -162,6 +129,19 @@ export default function MCQComponent() {
         <form onSubmit={handleAddMCQ} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
+              Course ID
+            </label>
+            <input
+              type="text"
+              value={sectionTitle}
+              onChange={(e) => setcourseid(e.target.value)}
+              className="w-full p-2 bg-gray-800/50 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+              placeholder="Enter section title"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Section Title
             </label>
             <input
@@ -201,7 +181,7 @@ export default function MCQComponent() {
                     onChange={(e) => handleQuestionChange(qIndex, "description", e.target.value)}
                     className="w-full p-2 bg-gray-800/50 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-300"
                     placeholder="Enter question description"
-                    rows="3"
+                    rows={3}
                     required
                   />
                 </div>
@@ -272,7 +252,7 @@ export default function MCQComponent() {
       {activeTab === "viewMCQs" && (
         <div className="space-y-4">
           <h3 className="text-lg font-medium text-gray-200 mb-2">Available MCQ Sections</h3>
-          {mcqs.length > 0 ? (
+          {mcqs && mcqs.length > 0 ? (
             <div className="space-y-3">
               {mcqs.map((section, index) => (
                 <div
