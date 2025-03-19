@@ -52,6 +52,9 @@ const CourseScheme = new mongoose.Schema(
         ],
       },
     ],
+   students:[{
+	type:mongoose.Schema.Types.ObjectId
+   }],
   },
   { versionKey: false },
 );

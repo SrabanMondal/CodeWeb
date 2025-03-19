@@ -126,4 +126,56 @@ const AddMcq = async (req, res) => {
     res.status(500).json(new ApiError(false, error.message));
   }
 };
-export { CreateCourse, GetAllCourses, AddCourseStudent, AddSection, AddMcq };
+const GetMcqSection = async (req, res) => {
+  try {
+    const { courseid } = req.body;
+    if (!courseid) {
+      return res
+        .status(400)
+        .json(new ApiResponse(false, "Course Id is required"));
+    }
+    const course = await Course.findOne({ courseid: courseid });
+    if (!course) {
+      return res.status(404).json(new ApiResponse(false, "Course Not Found"));
+    }
+    const final_data = [];
+    for (let i = 0; i < course.mcqsection.length; i++) {
+      const data = course.mcqsection[i];
+      data.push(final_data);
+    }
+    res.status(200).json(new ApiResponse(true, final_data));
+  } catch (error) {
+    res.status(500).json(new ApiError(false, error.message));
+  }
+};
+const GetSection = async (req, res) => {
+  try {
+    const { courseid } = req.body;
+    if (!courseid) {
+      return res
+        .status(400)
+        .json(new ApiResponse(false, "Course Id is required"));
+    }
+    const course = await Course.findOne({ courseid: courseid });
+    if (!course) {
+      return res.status(404).json(new ApiResponse(false, "Course Not Found"));
+    }
+    const final_data = [];
+    for (let i = 0; i < course.section.length; i++) {
+      const data = course.section[i];
+      data.push(final_data);
+    }
+    res.status(200).json(new ApiResponse(true, final_data));
+  } catch (error) {
+    res.status(500).json(new ApiError(false, error.message));
+  }
+};
+export {
+  CreateCourse,
+  GetAllCourses,
+  AddCourseStudent,
+  AddSection,
+  AddMcq,
+  GetMcqSection,
+  GetSection,
+};
