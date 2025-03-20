@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Mcqs, Section } from "./client";
+import { course, Mcqs, Section } from "./client";
 //const api = "http://localhost:3000"
 //const api2 = "http://localhost:4500"
 const api3 = "http://localhost:4900"
@@ -61,18 +61,32 @@ export async function addSection(courseid:string,title:string, questions:Array<s
         return false;
     }
 }
-export async function getmcqs(): Promise<Mcqs[]|null> {
+
+export async function getsections(courseid:string): Promise<Section[]|null> {
     try {
-      const response = await axios.get(api3 + `/api/courses/getmcq`);
+      const response = await axios.post(api3 + `/api/courses/getsection`,{
+        courseid
+      });
       return response.data;
     } catch (error) {
         console.log(error)
       return null;
     }
   }
-export async function getsection(): Promise<Section[]|null> {
+export async function getmcqs(courseid:string): Promise<Mcqs[]|null> {
     try {
-      const response = await axios.get(api3 + `/api/courses/getsection`);
+      const response = await axios.post(api3 + `/api/courses/getmcq`,{
+        courseid
+      });
+      return response.data;
+    } catch (error) {
+        console.log(error)
+      return null;
+    }
+  }
+export async function getcourses(): Promise<course[]|null> {
+    try {
+      const response = await axios.get(api3 + `/api/courses/getall`);
       return response.data;
     } catch (error) {
         console.log(error)
