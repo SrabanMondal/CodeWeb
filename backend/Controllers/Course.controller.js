@@ -26,13 +26,16 @@ const CreateCourse = async (req, res) => {
 const GetAllCourses = async (req, res) => {
   try {
     const courses = await Course.find({});
-    const data = [];
-    console.log(courses);
+    const final_data = [];
     for (let i = 0; i < courses.length; i++) {
       const course = courses[i];
-      data.push(course);
+      const data = {
+        courseid: course.courseid,
+        title: course.title,
+      };
+      final_data.push(data);
     }
-    res.status(200).json(new ApiResponse(true, data));
+    res.status(200).json(new ApiResponse(true, final_data));
   } catch (error) {
     res.status(500).json(new ApiError(false, error.message));
   }
