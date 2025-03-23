@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import { Mcqs, Section } from "./client";
+import { Mcqs, Section, SectionQuestion} from "./client";
+import { log } from "console";
 //const api = "http://localhost:3000"
 //const api2 = "http://localhost:4500"
 const api3 = "http://localhost:4900"
@@ -46,13 +47,12 @@ export async function addMcq(courseid:string,title:string, questions: string[] ,
         return false;
     }
 }
-export async function addSection(courseid:string,title:string, questions:Array<string>,  description:string[], testcase:string[]){
+export async function addSection(courseid:string,title:string, questions:SectionQuestion[]){
     try {
         const response:AxiosResponse<ApiRes> = await axios.post(api3+'/api/v1/course/addsection',{
             courseid,
-            title,
-            description,
-            testcase
+            sectiontitle:title,
+            questions:questions
         })
         return response.data.status;
     }

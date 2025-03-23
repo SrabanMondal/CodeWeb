@@ -11,7 +11,7 @@ export type McqQuestion ={
 export type SectionQuestion ={
     title: string,
     description: string,
-    testcase: string
+    testcases: string
 }
 export type Mcqs ={
     title: string,

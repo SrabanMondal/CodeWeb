@@ -43,11 +43,14 @@ const CourseScheme = new mongoose.Schema(
             description: {
               type: String,
             },
-            testcases: [
-              {
+            testcases: [{
+              input:{
                 type: String,
               },
-            ],
+	      output:{
+		type: String
+	      }
+	     }],
           },
         ],
       },

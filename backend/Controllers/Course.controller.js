@@ -88,8 +88,9 @@ const AddCourseStudent = async (req, res) => {
 };
 const AddSection = async (req, res) => {
   try {
-    const { courseid, sectiontitle, questions, testcases } = req.body;
-    if (!courseid || !sectiontitle || !questions || !testcases) {
+    console.log(coursiid,sectiontitle,questions);
+    const { courseid, sectiontitle, questions} = req.body;
+    if (!courseid || !sectiontitle || !questions) {
       return res
         .status(400)
         .json(
@@ -105,8 +106,7 @@ const AddSection = async (req, res) => {
     }
     const section = {
       title: sectiontitle,
-      questions: questions,
-      testcases: testcases,
+      questions: questions
     };
     course.section.push(section);
     await course.save();

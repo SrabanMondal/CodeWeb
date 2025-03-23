@@ -1,6 +1,7 @@
 "use client";
 import { addSection, getsection } from "@/libs/apis/admin";
 import { Section, SectionQuestion } from "@/libs/apis/client";
+import { log } from "console";
 import { title } from "process";
 import { useState, useEffect, FormEvent } from "react";
 
@@ -12,7 +13,7 @@ export default function SectionComponent() {
   const [activeTab, setActiveTab] = useState("addSection");
   const [sectionTitle, setSectionTitle] = useState("");
   const [courseid, setcourseid] = useState("");
-  const [questions, setQuestions] = useState<SectionQuestion[]>([{ title: "", description: "", testcase: "" }]);
+  const [questions, setQuestions] = useState<SectionQuestion[]>([{ title: "", description: "", testcases: "" }]);
   const [sections, setSections] = useState<Section[]|null>(null);
   const [expandedSection, setExpandedSection] = useState<number|null>(null);
   const [message, setMessage] = useState("");
@@ -40,7 +41,7 @@ export default function SectionComponent() {
 
   // Add a new question input
   const addQuestion = () => {
-    setQuestions([...questions, { title: "", description: "", testcase: "" }]);
+    setQuestions([...questions, { title: "", description: "", testcases: "" }]);
   };
 
   // Remove a question input
@@ -53,22 +54,23 @@ export default function SectionComponent() {
   // Handle section submission
   const handleAddSection = async (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!sectionTitle || questions.some((q) => !q.title || !q.description || !q.testcase)) {
+    if (!sectionTitle || questions.some((q) => !q.title || !q.description || !q.testcases)) {
       setMessage("Please fill out all fields.");
       return;
     }
     setIsLoading(true);
     setMessage("");
-      const result = await addSection(courseid,title,questions.map((q) => q.title),questions.map((q) => q.description),questions.map((q) => q.testcase));
+      const result = await addSection(courseid,title,questions);
       if (result) {
         setMessage("Section added successfully");
         setSectionTitle("");
-        setQuestions([{ title: "", description: "", testcase: "" }]);
+        setQuestions([{ title: "", description: "", testcases: "" }]);
         await fetchSections();
       }
     else {
-      setMessage("Failed to add section. Please try again.");
+      setMessage("Failed to add section. Please try again."); 
     }
+    setIsLoading(false);
   };
 
   return (
@@ -112,10 +114,10 @@ export default function SectionComponent() {
             </label>
             <input
               type="text"
-              value={sectionTitle}
+              value={courseid}
               onChange={(e) => setcourseid(e.target.value)}
               className="w-full p-2 bg-gray-800/50 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-300"
-              placeholder="Enter section title"
+              placeholder="Enter Course Id"
               required
             />
           </div>
@@ -170,8 +172,8 @@ export default function SectionComponent() {
                   </label>
                   <input
                     type="text"
-                    value={question.testcase}
-                    onChange={(e) => handleQuestionChange(index, "testcase", e.target.value)}
+                    value={question.testcases}
+                    onChange={(e) => handleQuestionChange(index, "testcases", e.target.value)}
                     className="w-full p-2 bg-gray-800/50 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-300"
                     placeholder="Enter test case"
                     required
@@ -243,7 +245,7 @@ export default function SectionComponent() {
                             <strong>Description:</strong> {question.description}
                           </p>
                           <p className="text-sm text-gray-400 mt-1">
-                            <strong>Test Case:</strong> {question.testcase}
+                            <strong>Test Case:</strong> {question.testcases}
                           </p>
                         </div>
                       ))}
