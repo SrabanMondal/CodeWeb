@@ -58,7 +58,7 @@ export default function SectionComponent() {
 
   // Add a new question input
   const addQuestion = () => {
-    setQuestions([...questions, { title: "", description: "", testcase: "" }]);
+    setQuestions([...questions, { title: "", description: "", testcases: "" }]);
   };
 
   // Remove a question input
@@ -71,7 +71,7 @@ export default function SectionComponent() {
   // Handle section submission
   const handleAddSection = async (e) => {
     e.preventDefault();
-    if (!sectionTitle || questions.some((q) => !q.title || !q.description || !q.testcase)) {
+    if (!sectionTitle || questions.some((q) => !q.title || !q.description || !q.testcases)) {
       setMessage("Please fill out all fields.");
       return;
     }
@@ -90,6 +90,7 @@ export default function SectionComponent() {
     } finally {
       setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -178,8 +179,8 @@ export default function SectionComponent() {
                   </label>
                   <input
                     type="text"
-                    value={question.testcase}
-                    onChange={(e) => handleQuestionChange(index, "testcase", e.target.value)}
+                    value={question.testcases}
+                    onChange={(e) => handleQuestionChange(index, "testcases", e.target.value)}
                     className="w-full p-2 bg-gray-800/50 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-300"
                     placeholder="Enter test case"
                     required
@@ -266,7 +267,7 @@ export default function SectionComponent() {
                             <strong>Description:</strong> {question.description}
                           </p>
                           <p className="text-sm text-gray-400 mt-1">
-                            <strong>Test Case:</strong> {question.testcase}
+                            <strong>Test Case:</strong> {question.testcases}
                           </p>
                         </div>
                       ))}

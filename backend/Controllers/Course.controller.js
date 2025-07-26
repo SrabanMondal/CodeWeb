@@ -40,6 +40,21 @@ const GetAllCourses = async (req, res) => {
     res.status(500).json(new ApiError(false, error.message));
   }
 };
+const GetCourse = async (req, res) => {
+  try {
+    const { courseid } = req.body;
+    if (!courseid)
+      return res
+        .status(400)
+        .json(new ApiResponse(false, "CourseId is required"));
+    const course = await Course.findOne({ courseid: courseid });
+    if (!course)
+      return res.status(404).json(new ApiResponse(false, "Course Not Found"));
+    res.status(200).json(new ApiResponse(true, course));
+  } catch (error) {
+    res.status(500).json(new ApiError(false, error.message));
+  }
+};
 const AddCourseStudent = async (req, res) => {
   try {
     const { studentemail, courseid } = req.body;
@@ -73,8 +88,9 @@ const AddCourseStudent = async (req, res) => {
 };
 const AddSection = async (req, res) => {
   try {
-    const { courseid, sectiontitle, questions, testcases } = req.body;
-    if (!courseid || !sectiontitle || !questions || !testcases) {
+    console.log(coursiid,sectiontitle,questions);
+    const { courseid, sectiontitle, questions} = req.body;
+    if (!courseid || !sectiontitle || !questions) {
       return res
         .status(400)
         .json(
@@ -90,8 +106,7 @@ const AddSection = async (req, res) => {
     }
     const section = {
       title: sectiontitle,
-      questions: questions,
-      testcases: testcases,
+      questions: questions
     };
     course.section.push(section);
     await course.save();
@@ -177,6 +192,7 @@ export {
   CreateCourse,
   GetAllCourses,
   AddCourseStudent,
+  GetCourse,
   AddSection,
   AddMcq,
   GetMcqSection,
